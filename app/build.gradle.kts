@@ -1,6 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
+    id("com.apollographql.apollo3")
+
+    kotlin("plugin.serialization") version "1.9.10"
 }
 
 android {
@@ -30,8 +34,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -46,6 +50,12 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.example.anibugaga")
     }
 }
 
@@ -66,4 +76,27 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //Navigation
+    implementation("androidx.navigation:navigation-compose:2.6.0")
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    ksp("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    //ViewModel and LifeCycle
+    implementation("androidx.lifecycle:lifecycle-common:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+
+    //Apollo
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.2.2")
+
+    //Kotlin Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 }
